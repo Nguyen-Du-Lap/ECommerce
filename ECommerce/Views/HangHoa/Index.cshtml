@@ -1,0 +1,68 @@
+﻿@model ECommerce.ViewModels.HangHoaPagedVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_DanhSachHangHoa";
+
+    //truyền dữ liệu sang _DanhSachHangHoa
+    // Truyền dữ liệu qua ViewData
+    ViewData["PageNumber"] = Model.PageNumber;
+    ViewData["TotalPages"] = Model.TotalPages;
+    ViewData["CurrentSort"] = Model.CurrentSort;
+}
+
+
+<!-- Single Page Header start -->
+@section Breadcrum {
+    <div class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6">Shop</h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Pages</a></li>
+            <li class="breadcrumb-item active text-white">Shop</li>
+        </ol>
+    </div>
+}
+<!-- Single Page Header End -->
+
+<!-- Fruits Shop Start-->
+@await Html.PartialAsync("ProductItem", Model)
+<div class="col-12">
+    <div class="pagination d-flex justify-content-center mt-5">
+        <!-- Nút Previous -->
+        @if (Model.PageNumber > 1)
+        {
+            <a href="@Url.Action("Index", new { pageNumber = Model.PageNumber - 1, sortOrder = Model.CurrentSort })" class="rounded">&laquo;</a>
+        }
+        else
+        {
+            <a href="#" class="rounded disabled">&laquo;</a>
+        }
+
+        <!-- Hiển thị số trang -->
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            if (i == Model.PageNumber)
+            {
+                <!-- Trang hiện tại -->
+                <a href="#" class="active rounded">@i</a>
+            }
+            else
+            {
+                <!-- Các trang khác -->
+                <a href="@Url.Action("Index", new { pageNumber = i, sortOrder = Model.CurrentSort })" class="rounded">@i</a>
+            }
+        }
+
+        <!-- Nút Next -->
+        @if (Model.PageNumber < Model.TotalPages)
+        {
+            <a href="@Url.Action("Index", new { pageNumber = Model.PageNumber + 1, sortOrder = Model.CurrentSort })" class="rounded">&raquo;</a>
+        }
+        else
+        {
+            <a href="#" class="rounded disabled">&raquo;</a>
+        }
+    </div>
+</div>
+<!-- Fruits Shop End-->
+

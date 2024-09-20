@@ -1,0 +1,8 @@
+﻿@model IEnumerable<ECommerce.ViewModels.HangHoaVM>
+@{
+    ViewData["Title"] = "Search";
+    Layout = "_DanhSachHangHoa";
+}
+
+<h3>Kết qủa tìm kiếm  <b>@ViewBag.query</b>.</h3>
+@await Html.PartialAsync("ProductItem", Model)
